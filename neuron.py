@@ -31,7 +31,7 @@ class Neuron:
 			self.dendrites[dendrite] = (random.randint(1,200) - 100) / 100
 
 	# Cogitation process, compare activation vs mean sum of dendrites.
-	def cogitate(self, *activation_matrix):
+	def cogitate(self, activation_matrix=""):
 		"""Cogitation process"""
 		# Checking new activation parameters.
 		if activation_matrix:
@@ -51,7 +51,7 @@ class Neuron:
 		# If there are no active dendrites, avoid 0 division, by giving 0.
 			power_matrix_average = 0
 		nucleus_threshold = self.nucleus_threshold
-
+		return power_matrix_average
 		# Checking activation.
 		if power_matrix_average >= nucleus_threshold:
 			self.nucleus = 1
