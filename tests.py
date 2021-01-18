@@ -123,6 +123,10 @@ class TestNeuron(unittest.TestCase):
 			# Randomizing dendrites power.
 			my_neuron.randomize_dendrites()
 
+			# Generating random nucleus threshold.
+			nucleus_threshold = random.randint(0, 100) / 100
+			my_neuron.nucleus_threshold = nucleus_threshold
+
 			# Writing new power matrix through parametrized cogitation.
 			average_from_class = my_neuron.cogitate(activation_matrix)
 
@@ -139,10 +143,6 @@ class TestNeuron(unittest.TestCase):
 					power_matrix.append(dendrites_power[n])
 				n += 1
 
-			# Generating random nucleus threshold.
-			nucleus_threshold = random.randint(0, 100) / 100
-			my_neuron.nucleus_threshold = nucleus_threshold
-
 			nulceus = 0
 			# Generating average from power matrix.
 			try:
@@ -157,14 +157,6 @@ class TestNeuron(unittest.TestCase):
 			else:
 				nucleus = 0
 			filename = 'debug.log'
-
-			with open(filename, 'w') as f_obj:
-				f_obj.write(str(power_matrix) + "\n\n\n\n------------Power matrix from" +
-					" neuron class------------\n\n\n\n" + str(my_neuron.power_matrix) +
-					"\n\n\n\n------------Iteration number------------\n\n\n\n" + str(iteration) +
-					"\n\n\n\n------------Nucleus threshold test/original------------\n\n\n\n" +
-					str(nucleus_threshold) + "/" + str(my_neuron.nucleus_threshold) + 
-					" Division result =" + str(power_matrix_average) + " " + str(average_from_class))
 
 			self.assertEqual(nucleus, my_neuron.nucleus)
 

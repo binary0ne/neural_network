@@ -50,10 +50,9 @@ class Neuron:
 		except ZeroDivisionError:
 		# If there are no active dendrites, avoid 0 division, by giving 0.
 			power_matrix_average = 0
-		nucleus_threshold = self.nucleus_threshold
-		return power_matrix_average
+
 		# Checking activation.
-		if power_matrix_average >= nucleus_threshold:
+		if power_matrix_average >= self.nucleus_threshold:
 			self.nucleus = 1
 		else:
 			self.nucleus = 0
