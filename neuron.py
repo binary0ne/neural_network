@@ -1,5 +1,6 @@
 import random
 # ERROR IN A BASE LOGIC! NOT THE MEAN OF DENDRITES, NEED TO MAKE DENDRITES ACTIVATION CHECK!
+# Fixed, now neurons should only work when activated by an activation matrix.
 # Neuron could polarize and depolarize, this should be reflected somehow in the model.
 # Assumption 1. Depolarization could lead to a stronger connection with other neuron,
 # Which provides better output for a system.
