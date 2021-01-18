@@ -143,7 +143,6 @@ class TestNeuron(unittest.TestCase):
 					power_matrix.append(dendrites_power[n])
 				n += 1
 
-			nulceus = 0
 			# Generating average from power matrix.
 			try:
 				power_matrix_average = sum(power_matrix) / len(power_matrix)
@@ -152,6 +151,7 @@ class TestNeuron(unittest.TestCase):
 				power_matrix_average = 0
 
 			# Checking activation.
+			nulceus = 0
 			if power_matrix_average >= nucleus_threshold:
 				nucleus = 1
 			else:
