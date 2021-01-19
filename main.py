@@ -5,11 +5,11 @@ from neuron import Neuron
 
 first_neuron = Neuron(3)
 
-data_set_1 = [1, 1, 1]
-first_neuron.build_value_matrix(data_set_1)
-print(first_neuron.valuable_dendrites)
-print(first_neuron.dendrites)
-print(first_neuron.value_matrix)
+data_set_1 = [1, 1, 0]
+expected_result = 1
+nucleus_threshold = 50
+first_neuron.find_activation_window(expected_result, nucleus_threshold, data_set_1)
+
 
 filename = "value_matrix.json"
 

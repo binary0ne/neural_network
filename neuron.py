@@ -53,6 +53,11 @@ class Neuron:
 				continue
 			self.dendrites[dendrite] = 0
 
+	def setup_dendrites(self, target_settings):
+		"""Set dendrites power on targeted value"""
+		for dendrite in self.dendrites:
+			self.dendrites[dendrite] = target_settings		
+
 	# Cogitation process, compare activation vs mean sum of dendrites.
 	def cogitate(self, activation_matrix=""):
 		"""Cogitation process"""
@@ -81,6 +86,35 @@ class Neuron:
 			self.nucleus = 1
 		else:
 			self.nucleus = 0
+
+	def find_activation_window(self, expected_result, nucleus_threshold, activation_matrix=""):
+		"""Finding activation window with given parameters"""
+		self.nucleus_threshold = nucleus_threshold
+		if activation_matrix:
+			self.activation_matrix = activation_matrix
+		for dendrite in self.dendrites:
+			active_array = []
+			self.maximize_dendrites()
+			self.cogitate()
+			if self.nucleus == expected_result:
+				while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
+					active_array.append(self.dendrites[dendrite])
+					self.dendrites[dendrite] -= 1
+					self.cogitate()
+			elif self.nucleus != expected_result:
+				while self.nucleus != expected_result and self.dendrites[dendrite] >= -100:
+					self.dendrites[dendrite] -= 1
+					self.cogitate()
+				while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
+					active_array.append(self.dendrites[dendrite])
+					self.dendrites[dendrite] -= 1
+					self.cogitate()
+					
+			if not active_array:
+				for x in range(0, 201):
+					active_array.append(x - 100)
+
+			print(sorted(active_array))		
 
 
 	def build_value_matrix(self, activation_matrix=""):
