@@ -35,8 +35,8 @@ class TestNeuron(unittest.TestCase):
 
 	def test_activation_maximum_power(self):
 		"""Is neuron activated with maximum dendrites power?"""
-		dendrites_config = {"dendrite_0": 1, "dendrite_1": 1,
-			"dendrite_2": 1, "dendrite_3": 1,
+		dendrites_config = {"dendrite_0": 100, "dendrite_1": 100,
+			"dendrite_2": 100, "dendrite_3": 100,
 			}
 		my_neuron = Neuron(4)
 		my_neuron.dendrites = dendrites_config
@@ -47,15 +47,15 @@ class TestNeuron(unittest.TestCase):
 
 	def test_activation_by_matrix_and_power(self):
 		"""Check does matrix with power activate nucleus correctly?"""
-		dendrites_config = {"dendrite_0": 1, "dendrite_1": 0,
-			"dendrite_2": 0, "dendrite_3": 0,
+		dendrites_config = {"dendrite_0": 1, "dendrite_1": 1,
+			"dendrite_2": 0, "dendrite_3": 1,
 			}
 		my_neuron = Neuron(4)
 		my_neuron.dendrites = dendrites_config
-		my_neuron.activation_matrix = [1, 0, 0, 0]
+		my_neuron.activation_matrix = [0, 0, 1, 0]
 		my_neuron.cogitate()
 
-		self.assertEqual(1, my_neuron.nucleus)
+		self.assertEqual(0, my_neuron.nucleus)
 
 	def test_overrwrite_dendrites_parameters_by_arguments(self):
 		"""Will activation matrix change and work correctly with 
@@ -102,7 +102,7 @@ class TestNeuron(unittest.TestCase):
 			n = 0
 			for x in activation_matrix:
 				if x == 1:
-					power_matrix.append(dendrites_power[n])
+					power_matrix.append(int(dendrites_power[n]))
 				n += 1
 
 			self.assertEqual(power_matrix, my_neuron.power_matrix)
@@ -124,7 +124,7 @@ class TestNeuron(unittest.TestCase):
 			my_neuron.randomize_dendrites()
 
 			# Generating random nucleus threshold.
-			nucleus_threshold = random.randint(0, 100) / 100
+			nucleus_threshold = random.randint(0, 100)
 			my_neuron.nucleus_threshold = nucleus_threshold
 
 			# Writing new power matrix through parametrized cogitation.
@@ -140,7 +140,7 @@ class TestNeuron(unittest.TestCase):
 			n = 0
 			for x in activation_matrix:
 				if x == 1:
-					power_matrix.append(dendrites_power[n])
+					power_matrix.append(int(dendrites_power[n]))
 				n += 1
 
 			# Generating average from power matrix.
@@ -156,8 +156,27 @@ class TestNeuron(unittest.TestCase):
 				nucleus = 1
 			else:
 				nucleus = 0
-			filename = 'debug.log'
 
 			self.assertEqual(nucleus, my_neuron.nucleus)
 
+	def test_learning_capabilities_positive_result(self):
+		"""Will test ability of neuron to adapt to a static data input with
+		positive expected result"""
+		dataset = [1, 0, 1, 0]
+		expected_result = 1
+		my_neuron = Neuron(len(dataset))
+		my_neuron.learn(expected_result, dataset)
+
+		self.assertEqual(expected_result, my_neuron.nucleus)
+
+	def test_learning_capabilities_negative_result(self):
+		"""Will test ability of neuron to adapt to a static data input with
+		negative expected result"""
+		dataset = [1, 0, 1, 0]
+		expected_result = 0
+		my_neuron = Neuron(len(dataset))
+		my_neuron.learn(expected_result, dataset)
+
+		self.assertEqual(expected_result, my_neuron.nucleus)
+		
 unittest.main()
