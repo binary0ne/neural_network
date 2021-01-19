@@ -159,6 +159,42 @@ class TestNeuron(unittest.TestCase):
 
 			self.assertEqual(nucleus, my_neuron.nucleus)
 
+	def test_maximize_dendrites(self):
+		"""Check, are all dendrites maximized?"""
+		my_neuron = Neuron(10)
+		my_neuron.maximize_dendrites()
+
+		for value in my_neuron.dendrites.values():
+			self.assertEqual(100, value)
+
+	def test_minimize_dendrites(self):
+		"""Check, are all dendrites minimized?"""
+		my_neuron = Neuron(10)
+		my_neuron.minimize_dendrites()
+
+		for value in my_neuron.dendrites.values():
+			self.assertEqual(-100, value)
+
+	def test_normalize_dendrites(self):
+		"""Check, are all dendrites normalized?"""
+		my_neuron = Neuron(10)
+		my_neuron.normalize_dendrites()
+
+		for value in my_neuron.dendrites.values():
+			self.assertEqual(0, value)
+
+	def test_normalize_dendrites_withlist(self):
+		"""Check, are all dendrites normalized?"""
+		my_neuron = Neuron(10)
+		my_neuron.dendrites["dendrite_5"] = 50
+		my_neuron.normalize_dendrites(["dendrite_5"])
+
+		for dendrite in my_neuron.dendrites:
+			if dendrite == "dendrite_5":
+				self.assertEqual(50, my_neuron.dendrites[dendrite])
+			else:
+				self.assertEqual(0, my_neuron.dendrites[dendrite])
+
 	def test_learning_capabilities_positive_result(self):
 		"""Will test ability of neuron to adapt to a static data input with
 		positive expected result"""
@@ -175,8 +211,9 @@ class TestNeuron(unittest.TestCase):
 		dataset = [1, 0, 1, 0]
 		expected_result = 0
 		my_neuron = Neuron(len(dataset))
+		my_neuron.nucleus = 1
 		my_neuron.learn(expected_result, dataset)
 
 		self.assertEqual(expected_result, my_neuron.nucleus)
-		
+
 unittest.main()

@@ -14,8 +14,10 @@ class Neuron:
 		self.dendrites = {}
 		self.activation_matrix = []
 		self.power_matrix = []
-		self.nucleus_threshold = -60
+		self.nucleus_threshold = 100
 		self.nucleus = 0
+		self.valuable_dendrites = {}
+		self.value_matrix = {}
 
 		# Dendrites base activation.
 		x = 0
@@ -25,11 +27,31 @@ class Neuron:
 			x += 1
 	
 	# Assume, the power to activate a neuron could be positive or negative.
-	# Initial state is random
+	# Different dendrites presets.
 	def randomize_dendrites(self):
 		"""Randomly allocating power of dendrites"""
 		for dendrite in self.dendrites:
 			self.dendrites[dendrite] = (random.randint(1,200) - 100)
+
+	def maximize_dendrites(self):
+		"""Maximizing dendrites power"""
+		for dendrite in self.dendrites:
+			self.dendrites[dendrite] = 100
+
+	def minimize_dendrites(self):
+		"""Minimizing dendrites power"""
+		for dendrite in self.dendrites:
+			self.dendrites[dendrite] = -100
+
+	def normalize_dendrites(self, valuable_dendrites=""):
+		"""Setting power = 0 to unvaluable dendrites if list is provided
+		exclude provided dendrites from normalization"""
+		if valuable_dendrites:
+			self.valuable_dendrites = valuable_dendrites[:]
+		for dendrite in self.dendrites:
+			if dendrite in self.valuable_dendrites:
+				continue
+			self.dendrites[dendrite] = 0
 
 	# Cogitation process, compare activation vs mean sum of dendrites.
 	def cogitate(self, activation_matrix=""):
@@ -60,81 +82,11 @@ class Neuron:
 		else:
 			self.nucleus = 0
 
+
+	def build_value_matrix(self, activation_matrix=""):
+		"""Finding responsible for result dendrites"""
+
+
 	# Learning method for a neuron.
 	def learn(self, expected_result, activation_matrix=""):
 		"""Allows to "train" neuron by altering dendrite powers"""
-		# Adding new activation matrix.
-		self.activation_matrix = activation_matrix
-
-		# Switching nucleus threshold to training mode, while holding old one.
-		old_nucleus_threshold = self.nucleus_threshold
-		self.nucleus_threshold = 100
-
-		# Check for expected result.
-		if expected_result == 1:
-
-			# Finding minimum appropriate activation value.
-			for dendrite in self.dendrites.keys():
-				flag = True
-				while flag:
-					self.dendrites[dendrite] += 1
-					self.cogitate()
-					if self.dendrites[dendrite] >= 100:
-						self.dendrites[dendrite] = 100
-						self.cogitate()
-						flag = False
-					if self.nucleus == 1:
-						self.cogitate()
-						flag = False
-
-			# Lowering all other values to their minimums.
-			for dendrite in self.dendrites.keys():
-				flag = True
-				while flag:
-					self.dendrites[dendrite] -= 1
-					self.cogitate()
-					if self.dendrites[dendrite] <= -100:
-						self.dendrites[dendrite] = -100
-						flag = False
-					if self.nucleus != 1:
-						self.dendrites[dendrite] += 1
-						self.cogitate()
-						flag = False
-
-		# Checking for 0 as expected result.
-		elif expected_result == 0:
-
-			# Finding maximum appropriate activation value.
-			for dendrite in self.dendrites.keys():
-				flag = True
-				while flag:
-					self.dendrites[dendrite] -= 1
-					self.cogitate()
-					if self.dendrites[dendrite] <= -100:
-						self.dendrites[dendrite] = -100
-						self.cogitate()
-						flag = False
-					if self.nucleus == 0:
-						self.cogitate()
-						flag = False
-
-			# Maximizing nonvaluable powers.
-			for dendrite in self.dendrites.keys():
-				flag = True
-				while flag:
-					self.dendrites[dendrite] += 1
-					self.cogitate()
-					if self.dendrites[dendrite] >= 100:
-						self.dendrites[dendrite] = 100
-						self.cogitate()
-						flag = False
-					if self.nucleus != 0:
-						self.dendrites[dendrite] -= 1
-						self.cogitate()
-						flag = False
-
-		# Returning old activation threshold.
-		self.nucleus_threshold = old_nucleus_threshold
-
-
-

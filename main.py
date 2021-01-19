@@ -1,18 +1,17 @@
+import json
+
 # Neural network main code.
 from neuron import Neuron
 
-first_neuron = Neuron(7)
-first_neuron.randomize_dendrites()
-data_set = [0, 0, 0, 0, 0, 1, 1]
-first_neuron.learn(1, data_set)
-print(first_neuron.nucleus)
+first_neuron = Neuron(3)
+
+data_set_1 = [1, 1, 1]
+first_neuron.build_value_matrix(data_set_1)
+print(first_neuron.valuable_dendrites)
 print(first_neuron.dendrites)
+print(first_neuron.value_matrix)
 
-first_neuron.cogitate([0, 0, 0, 0, 0, 1, 1])
-print(first_neuron.nucleus)
+filename = "value_matrix.json"
 
-first_neuron.cogitate([0, 0, 0, 0, 1, 1, 1])
-print(first_neuron.nucleus)
-
-first_neuron.cogitate([1, 1, 1, 1, 1, 1, 1])
-print(first_neuron.nucleus)
+with open(filename, 'w') as f_obj:
+	f_obj.write(json.dumps(first_neuron.value_matrix, indent=4, sort_keys=True))
