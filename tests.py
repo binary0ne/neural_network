@@ -208,12 +208,31 @@ class TestNeuron(unittest.TestCase):
 	def test_learning_capabilities_negative_result(self):
 		"""Will test ability of neuron to adapt to a static data input with
 		negative expected result"""
-		dataset = [1, 0, 1, 0]
+		dataset = [0, 1, 1, 0]
 		expected_result = 0
 		my_neuron = Neuron(len(dataset))
 		my_neuron.nucleus = 1
 		my_neuron.learn(expected_result, dataset)
 
 		self.assertEqual(expected_result, my_neuron.nucleus)
+
+	def test_learning_capabilities_random(self):
+		"""Will test ability to learn single activation matrix"""
+		for iteration in range(0, 1001):
+			# Random dendrites numbers, from 1 to 20.
+			dendrites_amount = random.randint(1,20)
+			my_neuron = Neuron(dendrites_amount)
+			activation_matrix = []
+
+			# Generating random activation matrix and its expected result.
+			for x in range(0, dendrites_amount):
+				activation_matrix.append(random.randint(0,1))
+
+			# Generating random expected result.
+			expected_result = random.randint(0,1)
+
+			my_neuron.learn(expected_result, activation_matrix)
+
+			self.assertEqual(expected_result, my_neuron.nucleus)		
 
 unittest.main()

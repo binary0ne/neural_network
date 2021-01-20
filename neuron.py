@@ -32,7 +32,7 @@ class Neuron:
 	def randomize_dendrites(self):
 		"""Randomly allocating power of dendrites"""
 		for dendrite in self.dendrites:
-			self.dendrites[dendrite] = (random.randint(1,200) - 100)
+			self.dendrites[dendrite] = (random.randint(0,200) - 100)
 
 	def maximize_dendrites(self):
 		"""Maximizing dendrites power"""
@@ -167,6 +167,7 @@ class Neuron:
 				else:
 					list_avg = int(list_avg) - 1
 			self.dendrites[dendrite] = list_avg
-
+			print(self.nucleus)
+			print(self.nucleus_threshold)
 		# Cogitating in final setup
 		self.cogitate()
