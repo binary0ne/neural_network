@@ -87,7 +87,7 @@ class Neuron:
 			self.nucleus = 1
 		else:
 			self.nucleus = 0
-	def find_optimal_threshold(self, activation_matrix=""):
+	def find_optimal_threshold(self, expected_result, activation_matrix=""):
 		"""Find meaningful threshold fo given activation matrix"""
 		if activation_matrix:
 			self.activation_matrix = activation_matrix
@@ -102,12 +102,16 @@ class Neuron:
 			optimal_threshold = int(y * (x - 1))
 		else:
 			optimal_threshold = int(y * (x - 1)) + 1
+		if expected_result == 1:
+			return optimal_threshold
+		else:
+			return 100 - optimal_threshold
 
-		self.nucleus_threshold = optimal_threshold
-
-	def find_activation_window(self, dendrite, expected_result):
+	def find_activation_window(self,dendrite, expected_result, activation_matrix=""):
 		"""Finding activation window with given parameters for particular dendrite"""
 		# Should rewrite this way for a better calculation of activation window
+		if activation_matrix:
+			self.activation_matrix = activation_matrix
 		active_array = []
 		self.cogitate()
 		if self.nucleus == expected_result:
@@ -128,13 +132,27 @@ class Neuron:
 			for x in range(0, 201):
 				active_array.append(x - 100)
 
-		return (sorted(active_array))		
-
-
-	def build_value_matrix(self, activation_matrix=""):
-		"""Finding responsible for result dendrites"""
-
+		return(sorted(active_array))		
 
 	# Learning method for a neuron.
 	def learn(self, expected_result, activation_matrix=""):
 		"""Allows to "train" neuron by altering dendrite powers"""
+		if activation_matrix:
+			self.activation_matrix = activation_matrix		
+		self.nucleus_threshold = self.find_optimal_threshold(expected_result, activation_matrix)
+		self.maximize_dendrites()
+		self.cogitate()
+		for dendrite in self.dendrites:
+			activation_window = self.find_activation_window(dendrite, expected_result)
+			list_sum = sum(activation_window)
+			list_len = len(activation_window)
+			list_avg = int(list_sum / list_len)
+			if list_avg % 1 == 0:
+				list_avg = int(list_avg)
+			else:
+				if list_avg > 0:
+					list_avg = int(list_avg) + 1
+				else:
+					list_avg = int(list_avg) - 1
+			self.dendrites[dendrite] = list_avg
+		self.cogitate()
