@@ -11,6 +11,7 @@ class Neuron:
 
 	# Initialization.
 	def __init__(self, initialize_dendrites):
+		# Parameters, some of them are not used or outdated
 		self.dendrites = {}
 		self.activation_matrix = []
 		self.power_matrix = []
@@ -109,10 +110,15 @@ class Neuron:
 
 	def find_activation_window(self,dendrite, expected_result, activation_matrix=""):
 		"""Finding activation window with given parameters for particular dendrite"""
-		# Should rewrite this way for a better calculation of activation window
+		# Still not sure about expected 0
+		# Checking for activation matrix
 		if activation_matrix:
 			self.activation_matrix = activation_matrix
+
+		# Array for available powers to dendrite
 		active_array = []
+
+		# Cogitation for current setup
 		self.cogitate()
 		if self.nucleus == expected_result:
 			while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
@@ -137,11 +143,17 @@ class Neuron:
 	# Learning method for a neuron.
 	def learn(self, expected_result, activation_matrix=""):
 		"""Allows to "train" neuron by altering dendrite powers"""
+		# Check for matrix update
 		if activation_matrix:
-			self.activation_matrix = activation_matrix		
+			self.activation_matrix = activation_matrix	
+		# Finding and setuping optimat activation threshold	
 		self.nucleus_threshold = self.find_optimal_threshold(expected_result, activation_matrix)
+		
+		# Setting up initial parameters
 		self.maximize_dendrites()
 		self.cogitate()
+
+		# Finding average activation parameters for neurons
 		for dendrite in self.dendrites:
 			activation_window = self.find_activation_window(dendrite, expected_result)
 			list_sum = sum(activation_window)
@@ -155,4 +167,6 @@ class Neuron:
 				else:
 					list_avg = int(list_avg) - 1
 			self.dendrites[dendrite] = list_avg
+
+		# Cogitating in final setup
 		self.cogitate()
