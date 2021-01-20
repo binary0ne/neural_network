@@ -7,9 +7,6 @@ data_set_1 = [0, 0, 0]
 first_neuron = Neuron(len(data_set_1))
 expected_result = 1
 first_neuron.learn(expected_result, data_set_1)
-print(first_neuron.nucleus_threshold)
-print(first_neuron.dendrites)
-print(first_neuron.nucleus)
 
 filename = "value_matrix.json"
 

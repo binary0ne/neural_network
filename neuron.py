@@ -167,7 +167,6 @@ class Neuron:
 				else:
 					list_avg = int(list_avg) - 1
 			self.dendrites[dendrite] = list_avg
-			print(self.nucleus)
-			print(self.nucleus_threshold)
+
 		# Cogitating in final setup
 		self.cogitate()
