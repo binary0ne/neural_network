@@ -77,6 +77,7 @@ class Neuron:
 		power_matrix = self.power_matrix
 		try:
 			power_matrix_average = (sum(power_matrix)) / len(power_matrix)
+
 		except ZeroDivisionError:
 		# If there are no active dendrites, avoid 0 division, by giving 0.
 			power_matrix_average = 0
@@ -86,35 +87,48 @@ class Neuron:
 			self.nucleus = 1
 		else:
 			self.nucleus = 0
-
-	def find_activation_window(self, expected_result, nucleus_threshold, activation_matrix=""):
-		"""Finding activation window with given parameters"""
-		self.nucleus_threshold = nucleus_threshold
+	def find_optimal_threshold(self, activation_matrix=""):
+		"""Find meaningful threshold fo given activation matrix"""
 		if activation_matrix:
 			self.activation_matrix = activation_matrix
-		for dendrite in self.dendrites:
-			active_array = []
-			self.maximize_dendrites()
-			self.cogitate()
-			if self.nucleus == expected_result:
-				while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
-					active_array.append(self.dendrites[dendrite])
-					self.dendrites[dendrite] -= 1
-					self.cogitate()
-			elif self.nucleus != expected_result:
-				while self.nucleus != expected_result and self.dendrites[dendrite] >= -100:
-					self.dendrites[dendrite] -= 1
-					self.cogitate()
-				while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
-					active_array.append(self.dendrites[dendrite])
-					self.dendrites[dendrite] -= 1
-					self.cogitate()
-					
-			if not active_array:
-				for x in range(0, 201):
-					active_array.append(x - 100)
+		x = self.activation_matrix.count(1)
+		try:
+			y = 100 / x
+		except ZeroDivisionError:
+			y = 0
 
-			print(sorted(active_array))		
+		# Check for pure division, if not, round up anyway
+		if y * (x - 1) % 1 == 0:
+			optimal_threshold = int(y * (x - 1))
+		else:
+			optimal_threshold = int(y * (x - 1)) + 1
+
+		self.nucleus_threshold = optimal_threshold
+
+	def find_activation_window(self, dendrite, expected_result):
+		"""Finding activation window with given parameters for particular dendrite"""
+		# Should rewrite this way for a better calculation of activation window
+		active_array = []
+		self.cogitate()
+		if self.nucleus == expected_result:
+			while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
+				active_array.append(self.dendrites[dendrite])
+				self.dendrites[dendrite] -= 1
+				self.cogitate()
+		elif self.nucleus != expected_result:
+			while self.nucleus != expected_result and self.dendrites[dendrite] >= -100:
+				self.dendrites[dendrite] -= 1
+				self.cogitate()
+			while self.nucleus == expected_result and self.dendrites[dendrite] >= -100:
+				active_array.append(self.dendrites[dendrite])
+				self.dendrites[dendrite] -= 1
+				self.cogitate()
+
+		if not active_array:
+			for x in range(0, 201):
+				active_array.append(x - 100)
+
+		return (sorted(active_array))		
 
 
 	def build_value_matrix(self, activation_matrix=""):

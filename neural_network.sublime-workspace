@@ -67,7 +67,33 @@
 			"file": "tests.py",
 			"settings":
 			{
-				"buffer_size": 412,
+				"buffer_size": 6627,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.py",
+			"settings":
+			{
+				"buffer_size": 517,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "value_matrix.json",
+			"settings":
+			{
+				"buffer_size": 2,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "neuron.py",
+			"settings":
+			{
+				"buffer_size": 4732,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -171,8 +197,16 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/Users/antonvisnevski/Desktop/code/neural_network"
+	],
 	"file_history":
 	[
+		"/Users/antonvisnevski/Desktop/code/pythonlearning/test2.py",
+		"/Users/antonvisnevski/Desktop/code/neural_network/debug.log",
+		"/Users/antonvisnevski/Desktop/code/neural_network/neuron.py",
+		"/Users/antonvisnevski/Desktop/code/neural_network/main.py",
 		"/Users/antonvisnevski/Desktop/code/pythonlearning/tests/name_function.py",
 		"/Users/antonvisnevski/Desktop/code/pythonlearning/tests/names.py",
 		"/Users/antonvisnevski/Desktop/code/pythonlearning/tests/test_name_function.py",
@@ -273,7 +307,7 @@
 	],
 	"find":
 	{
-		"height": 24.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
@@ -287,6 +321,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"min",
+			"0.23200000000000004"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -304,7 +340,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -313,15 +349,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 412,
+						"buffer_size": 6627,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								21,
-								27
+								5757,
+								5757
 							]
 						],
 						"settings":
@@ -330,6 +366,97 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 517,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								517,
+								517
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "value_matrix.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2,
+								2
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "neuron.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4732,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								922,
+								922
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 86.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -355,11 +482,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -371,7 +505,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 162.0
+		"height": 158.0
 	},
 	"output.find_results":
 	{
@@ -423,15 +557,15 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
-	"show_minimap": true,
+	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_visible": false,
+	"side_bar_width": 173.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
