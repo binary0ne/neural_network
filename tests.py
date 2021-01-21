@@ -4,6 +4,14 @@ from neuron import Neuron
 
 class TestNeuron(unittest.TestCase):
 	"""Neuron test class"""
+	def test_dendrites_initialization(self):
+		"""Testing initialize_dendrites method"""
+		my_neuron = Neuron()
+		my_neuron.initialize_dendrites(5)
+		test_dendrite = "dendrite_4"
+
+		self.assertIn(test_dendrite, my_neuron.dendrites)
+		
 	def test_activation_matrix_default_sum(self):
 		"""Is activation matrix sum default is 0's
 		(range from 0 to 100?"""
@@ -128,7 +136,7 @@ class TestNeuron(unittest.TestCase):
 			my_neuron.nucleus_threshold = nucleus_threshold
 
 			# Writing new power matrix through parametrized cogitation.
-			average_from_class = my_neuron.cogitate(activation_matrix)
+			my_neuron.cogitate(activation_matrix)
 
 			# Grabbing testing dendrites power list.
 			dendrites_power = []

@@ -1,1 +1,130 @@
-{}
+{
+    "data_1": {
+        "matrix": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "expected": 1,
+        "nucleus_threshold": 75,
+        "dendrites_config": {
+            "dendrite_0": 50,
+            "dendrite_1": 75,
+            "dendrite_2": 87,
+            "dendrite_3": 94
+        }
+    },
+    "data_2": {
+        "matrix": [
+            1,
+            0,
+            1,
+            1
+        ],
+        "expected": 1,
+        "nucleus_threshold": 67,
+        "dendrites_config": {
+            "dendrite_0": 50,
+            "dendrite_1": 0,
+            "dendrite_2": 75,
+            "dendrite_3": 88
+        }
+    },
+    "data_3": {
+        "matrix": [
+            0,
+            1,
+            0,
+            1
+        ],
+        "expected": 1,
+        "nucleus_threshold": 50,
+        "dendrites_config": {
+            "dendrite_0": 0,
+            "dendrite_1": 50,
+            "dendrite_2": 0,
+            "dendrite_3": 75
+        }
+    },
+    "data_4": {
+        "matrix": [
+            0,
+            0,
+            0,
+            1
+        ],
+        "expected": 1,
+        "nucleus_threshold": 0,
+        "dendrites_config": {
+            "dendrite_0": 0,
+            "dendrite_1": 0,
+            "dendrite_2": 0,
+            "dendrite_3": 50
+        }
+    },
+    "data_5": {
+        "matrix": [
+            0,
+            0,
+            1,
+            0
+        ],
+        "expected": 0,
+        "nucleus_threshold": 100,
+        "dendrites_config": {
+            "dendrite_0": 0,
+            "dendrite_1": 0,
+            "dendrite_2": 0,
+            "dendrite_3": 0
+        }
+    },
+    "data_6": {
+        "matrix": [
+            1,
+            0,
+            1,
+            0
+        ],
+        "expected": 0,
+        "nucleus_threshold": 50,
+        "dendrites_config": {
+            "dendrite_0": -50,
+            "dendrite_1": 0,
+            "dendrite_2": 0,
+            "dendrite_3": 0
+        }
+    },
+    "data_7": {
+        "matrix": [
+            1,
+            0,
+            0,
+            0
+        ],
+        "expected": 0,
+        "nucleus_threshold": 100,
+        "dendrites_config": {
+            "dendrite_0": 0,
+            "dendrite_1": 0,
+            "dendrite_2": 0,
+            "dendrite_3": 0
+        }
+    },
+    "data_8": {
+        "matrix": [
+            1,
+            1,
+            1,
+            0
+        ],
+        "expected": 0,
+        "nucleus_threshold": 33,
+        "dendrites_config": {
+            "dendrite_0": 0,
+            "dendrite_1": -51,
+            "dendrite_2": 0,
+            "dendrite_3": 0
+        }
+    }
+}

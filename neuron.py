@@ -10,7 +10,7 @@ class Neuron:
 	"""Basic neuron class intended for simulating a neuron"""
 
 	# Initialization.
-	def __init__(self, initialize_dendrites):
+	def __init__(self, initialize_dendrites=""):
 		# Parameters, some of them are not used or outdated
 		self.dendrites = {}
 		self.activation_matrix = []
@@ -22,11 +22,22 @@ class Neuron:
 
 		# Dendrites base activation.
 		x = 0
+		if initialize_dendrites:
+			while x < initialize_dendrites:
+				self.dendrites["dendrite_" + str(x)] = 0
+				self.activation_matrix.append(0)
+				x += 1
+	
+	# Dendrites initialization as a method.
+	def initialize_dendrites(self, initialize_dendrites):
+		"""Creates dendrites, or recreates"""
+		self.dendrites = {}		
+		x = 0
 		while x < initialize_dendrites:
 			self.dendrites["dendrite_" + str(x)] = 0
 			self.activation_matrix.append(0)
 			x += 1
-	
+
 	# Assume, the power to activate a neuron could be positive or negative.
 	# Different dendrites presets.
 	def randomize_dendrites(self):
@@ -88,6 +99,7 @@ class Neuron:
 			self.nucleus = 1
 		else:
 			self.nucleus = 0
+
 	def find_optimal_threshold(self, expected_result, activation_matrix=""):
 		"""Find meaningful threshold fo given activation matrix"""
 		if activation_matrix:
@@ -170,3 +182,40 @@ class Neuron:
 
 		# Cogitating in final setup
 		self.cogitate()
+
+	def parse_datasets(self, datasets):
+		"""Parses dataset"""
+		parsed_datasets = []
+		for dataset_name in datasets:
+			matrix = datasets[dataset_name]["matrix"]
+			expected = datasets[dataset_name]["expected"]
+			parsed_datasets.append([dataset_name, matrix, expected])
+		return parsed_datasets
+
+	def return_config(self):
+		"""Returns dendrites and nucleus threshold configuration"""
+		return [self.dendrites, self.nucleus_threshold]
+
+	def learn_datasets(self, datasets):
+		"""Multiple learn datasets and generates configs"""
+		learned_datasets = {}
+		parsed_datasets = self.parse_datasets(datasets)
+		for dataset_name, matrix, expected in parsed_datasets:
+			self.learn(expected, matrix)
+			configuration = self.return_config()
+			learned_datasets[dataset_name] = {}
+			learned_datasets[dataset_name]["matrix"] = matrix
+			learned_datasets[dataset_name]["expected"] = expected
+			learned_datasets[dataset_name]["nucleus_threshold"] = configuration[1]
+			# Processing dendrites list (weird but it just cant equal it to
+			# configuration[0])
+			dendrites_config = {}
+			dendrites_local = configuration[0]
+			for dendrite in dendrites_local:
+				dendrites_config[dendrite] = dendrites_local[dendrite]
+			learned_datasets[dataset_name]["dendrites_config"] = dendrites_config
+		return learned_datasets 
+
+
+
+
