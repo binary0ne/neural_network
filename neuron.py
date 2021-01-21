@@ -55,6 +55,21 @@ class Neuron:
 		for dendrite in self.dendrites:
 			self.dendrites[dendrite] = -100
 
+	def find_average(self, matrix):
+		"""Supportive method to find average"""
+		list_sum = sum(matrix)
+		list_len = len(matrix)
+		list_avg = int(list_sum / list_len)
+		if list_avg % 1 == 0:
+			list_avg = int(list_avg)
+		else:
+			if list_avg > 0:
+				list_avg = int(list_avg) + 1
+			else:
+				list_avg = int(list_avg) - 1
+
+		return(list_avg)
+
 	def normalize_dendrites(self, valuable_dendrites=""):
 		"""Setting power = 0 to unvaluable dendrites if list is provided
 		exclude provided dendrites from normalization"""
@@ -200,6 +215,7 @@ class Neuron:
 		"""Multiple learn datasets and generates configs"""
 		learned_datasets = {}
 		parsed_datasets = self.parse_datasets(datasets)
+
 		for dataset_name, matrix, expected in parsed_datasets:
 			self.learn(expected, matrix)
 			configuration = self.return_config()
@@ -211,10 +227,66 @@ class Neuron:
 			# configuration[0])
 			dendrites_config = {}
 			dendrites_local = configuration[0]
+
 			for dendrite in dendrites_local:
 				dendrites_config[dendrite] = dendrites_local[dendrite]
+
 			learned_datasets[dataset_name]["dendrites_config"] = dendrites_config
+
 		return learned_datasets 
+
+	def prepare_to_understand(self, datasets):
+		'''Make processable output for understanding (to neuron)'''
+		prepared_datasets = []
+		for dataset in datasets:
+			matrix = datasets[dataset]["matrix"]
+			threshold = datasets[dataset]["nucleus_threshold"]
+			dendrites = datasets[dataset]["dendrites_config"]
+			prepared_datasets.append([matrix, threshold, dendrites])
+
+		return prepared_datasets
+
+	def understand_learned(self, datasets):
+		'''Analyze datasets and adopt optimal parameters'''
+		learned_datasets = self.learn_datasets(datasets)
+		prepared_datasets = self.prepare_to_understand(learned_datasets)
+		thresholds = []
+		dendrites_powers = {}
+		for matrix, threshold, dendrites in prepared_datasets:
+			#Very bad, but works, cleaning list
+			for dendrite in dendrites:
+					dendrites_powers[dendrite] = []
+			prepared_datasets_str = str(prepared_datasets)
+			matrix_str = str(matrix)
+
+			if prepared_datasets_str.count(matrix_str) != 1:
+				prepared_datasets.remove([matrix, threshold, dendrites])
+
+		for matrix, threshold, dendrites in prepared_datasets:
+				thresholds.append(threshold)
+
+				for dendrite in dendrites:
+					if dendrites_powers[dendrite]:
+						dendrites_powers[dendrite].append(dendrites[dendrite])
+					else:
+						dendrites_powers[dendrite] = [dendrites[dendrite]]
+
+		for dendrite in dendrites_powers:
+			dendrite_average = self.find_average(dendrites_powers[dendrite])
+			self.dendrites[dendrite] = dendrite_average
+
+		activation_average = self.find_average(thresholds)
+		self.nucleus_threshold = activation_average
+		print(activation_average)
+
+	def predict(self, dataset):
+		"""Try to predict correct result"""
+		self.cogitate(dataset)
+
+		print("I think answer is " + str(self.nucleus))
+			
+
+
 
 
 
