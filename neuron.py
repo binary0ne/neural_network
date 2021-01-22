@@ -119,7 +119,7 @@ class Neuron:
 		"""Find meaningful threshold fo given activation matrix"""
 		if activation_matrix:
 			self.activation_matrix = activation_matrix
-		x = self.activation_matrix.count(1)
+		x = len(self.activation_matrix)
 		try:
 			y = 100 / x
 		except ZeroDivisionError:
@@ -130,7 +130,13 @@ class Neuron:
 			optimal_threshold = int(y * (x - 1))
 		else:
 			optimal_threshold = int(y * (x - 1)) + 1
-		if expected_result == 1:
+		if sum(self.activation_matrix) == 0 and expected_result == 0:
+			optimal_threshold = 100
+			return optimal_threshold
+		elif sum(self.activation_matrix) == 0 and expected_result == 1:
+			optimal_threshold = 0
+			return optimal_threshold
+		elif expected_result == 1:
 			return optimal_threshold
 		else:
 			return 100 - optimal_threshold
@@ -181,19 +187,15 @@ class Neuron:
 		self.cogitate()
 
 		# Finding average activation parameters for neurons
+		random_dendrites = []
 		for dendrite in self.dendrites:
+			random_dendrites.append(dendrite)
+		while len(random_dendrites) > 0:
+		#for dendrite in self.dendrites:
+			dendrite = random.choice(random_dendrites)
 			activation_window = self.find_activation_window(dendrite, expected_result)
-			list_sum = sum(activation_window)
-			list_len = len(activation_window)
-			list_avg = int(list_sum / list_len)
-			if list_avg % 1 == 0:
-				list_avg = int(list_avg)
-			else:
-				if list_avg > 0:
-					list_avg = int(list_avg) + 1
-				else:
-					list_avg = int(list_avg) - 1
-			self.dendrites[dendrite] = list_avg
+			self.dendrites[dendrite] = random.choice(activation_window)
+			random_dendrites.remove(dendrite)
 
 		# Cogitating in final setup
 		self.cogitate()
@@ -216,7 +218,13 @@ class Neuron:
 		learned_datasets = {}
 		parsed_datasets = self.parse_datasets(datasets)
 
+		negative = 0
+		positive = 0
 		for dataset_name, matrix, expected in parsed_datasets:
+			if expected == 0:
+				negative += 1
+			elif expected == 1:
+				positive += 1
 			self.learn(expected, matrix)
 			configuration = self.return_config()
 			learned_datasets[dataset_name] = {}
@@ -233,6 +241,83 @@ class Neuron:
 
 			learned_datasets[dataset_name]["dendrites_config"] = dendrites_config
 
+			# Correction for a lack of other results
+			if negative - positive >= 20:
+				if expected == 1:
+					while negative - positive != 0:
+						dataset_name_c = str(dataset_name) + "_pc" + str(positive)
+						self.learn(expected, matrix)
+						configuration = self.return_config()
+						learned_datasets[dataset_name_c] = {}
+						learned_datasets[dataset_name_c]["matrix"] = matrix
+						learned_datasets[dataset_name_c]["expected"] = expected
+						learned_datasets[dataset_name_c]["nucleus_threshold"] = configuration[1]
+						# Processing dendrites list (weird but it just cant equal it to
+						# configuration[0])
+						dendrites_config = {}
+						dendrites_local = configuration[0]
+
+						for dendrite in dendrites_local:
+							dendrites_config[dendrite] = dendrites_local[dendrite]
+
+						learned_datasets[dataset_name_c]["dendrites_config"] = dendrites_config						
+						positive += 1
+			elif positive - negative >= 20:
+				if expected == 0:
+					while positive - negative != 0:
+						dataset_name_c = str(dataset_name) + "_nc" + str(negative)
+						self.learn(expected, matrix)
+						configuration = self.return_config()
+						learned_datasets[dataset_name_c] = {}
+						learned_datasets[dataset_name_c]["matrix"] = matrix
+						learned_datasets[dataset_name_c]["expected"] = expected
+						learned_datasets[dataset_name_c]["nucleus_threshold"] = configuration[1]
+						# Processing dendrites list (weird but it just cant equal it to
+						# configuration[0])
+						dendrites_config = {}
+						dendrites_local = configuration[0]
+
+						for dendrite in dendrites_local:
+							dendrites_config[dendrite] = dendrites_local[dendrite]
+
+						learned_datasets[dataset_name_c]["dendrites_config"] = dendrites_config						
+						negative += 1
+			if expected == 1:
+				lp_expected = expected
+				lp_matrix = matrix
+				lp_dataset_name = dataset_name
+			else:
+				ln_expected = expected
+				ln_matrix = matrix
+				ln_dataset_name = dataset_name
+
+		while positive != negative:
+			if positive > negative:
+				expected = ln_expected
+				matrix = ln_matrix
+				dataset_name = ln_dataset_name
+				negative += 1
+			else:
+				expected = lp_expected
+				matrix = lp_matrix
+				dataset_name = lp_dataset_name	
+				positive += 1
+			dataset_name_c = str(dataset_name) + "_c" + str(negative)
+			self.learn(expected, matrix)
+			configuration = self.return_config()
+			learned_datasets[dataset_name_c] = {}
+			learned_datasets[dataset_name_c]["matrix"] = matrix
+			learned_datasets[dataset_name_c]["expected"] = expected
+			learned_datasets[dataset_name_c]["nucleus_threshold"] = configuration[1]
+			# Processing dendrites list (weird but it just cant equal it to
+			# configuration[0])
+			dendrites_config = {}
+			dendrites_local = configuration[0]
+
+			for dendrite in dendrites_local:
+				dendrites_config[dendrite] = dendrites_local[dendrite]
+
+			learned_datasets[dataset_name_c]["dendrites_config"] = dendrites_config							
 		return learned_datasets 
 
 	def prepare_to_understand(self, datasets):
@@ -256,11 +341,11 @@ class Neuron:
 			#Very bad, but works, cleaning list
 			for dendrite in dendrites:
 					dendrites_powers[dendrite] = []
-			prepared_datasets_str = str(prepared_datasets)
-			matrix_str = str(matrix)
+			#prepared_datasets_str = str(prepared_datasets)
+			#matrix_str = str(matrix)
 
-			if prepared_datasets_str.count(matrix_str) != 1:
-				prepared_datasets.remove([matrix, threshold, dendrites])
+			#if prepared_datasets_str.count(matrix_str) != 1:
+			#	prepared_datasets.remove([matrix, threshold, dendrites])
 
 		for matrix, threshold, dendrites in prepared_datasets:
 				thresholds.append(threshold)
@@ -276,8 +361,8 @@ class Neuron:
 			self.dendrites[dendrite] = dendrite_average
 
 		activation_average = self.find_average(thresholds)
-		self.nucleus_threshold = activation_average
-		print(activation_average)
+
+		self.nucleus_threshold = (activation_average / 2) - 1
 
 	def predict(self, dataset):
 		"""Try to predict correct result"""

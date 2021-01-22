@@ -11,7 +11,7 @@ class TestNeuron(unittest.TestCase):
 		test_dendrite = "dendrite_4"
 
 		self.assertIn(test_dendrite, my_neuron.dendrites)
-		
+
 	def test_activation_matrix_default_sum(self):
 		"""Is activation matrix sum default is 0's
 		(range from 0 to 100?"""
@@ -241,6 +241,11 @@ class TestNeuron(unittest.TestCase):
 
 			my_neuron.learn(expected_result, activation_matrix)
 
+			print(my_neuron.dendrites)
+			print(activation_matrix)
+			print(my_neuron.nucleus_threshold)
+			print(my_neuron.nucleus)
+			print(expected_result)
 			self.assertEqual(expected_result, my_neuron.nucleus)		
 
 unittest.main()
