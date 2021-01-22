@@ -7,7 +7,7 @@ dataset_len = 8
 first_neuron = Neuron(dataset_len)
 
 datasets ={}
-for x in range(0,2000):
+for x in range(0,1000):
 	datasets["data_" + str(x)] ={}
 
 for dataset in datasets:
@@ -16,7 +16,7 @@ for dataset in datasets:
 		z = random.randint(0, 1)
 		matrix.append(z)
 	datasets[dataset]["matrix"] = matrix
-	if matrix[0] == 1 and matrix[1] == 1 and matrix[2] == 0 and matrix[3] == 0:
+	if matrix[0] == 1 and matrix[1] == 1 and matrix[2] == 0:
 		datasets[dataset]["expected"] = 1
 	else:
 		datasets[dataset]["expected"] = 0
@@ -31,9 +31,6 @@ with open(filename, 'w') as f_obj:
 	f_obj.write(json.dumps(learned_datasets, indent=4, sort_keys=False))
 
 first_neuron.understand_learned(datasets)
-first_neuron.predict([1, 1, 0, 1, 1, 1, 1, 1])
+first_neuron.predict([1, 0, 0, 1, 1, 1, 1, 1])
 first_neuron.predict([1, 1, 0, 0, 1, 1, 1, 1])
-
-filename = "retrogramm.log"
-with open(filename, 'a') as f_obj:
-	f_obj.write("\n" + str(first_neuron.dendrites) + " Activation: " + str(first_neuron.nucleus_threshold))
+first_neuron.predict([1, 1, 1, 0, 1, 1, 1, 1])

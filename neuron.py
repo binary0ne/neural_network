@@ -1,4 +1,5 @@
 import random
+import string
 # ERROR IN A BASE LOGIC! NOT THE MEAN OF DENDRITES, NEED TO MAKE DENDRITES ACTIVATION CHECK!
 # Fixed, now neurons should only work when activated by an activation matrix.
 # Neuron could polarize and depolarize, this should be reflected somehow in the model.
@@ -114,7 +115,12 @@ class Neuron:
 			self.nucleus = 1
 		else:
 			self.nucleus = 0
-
+	def make_log(self):
+		"""Creates log file"""
+		filename = "retrogramm.log"
+		with open(filename, 'a') as f_obj:
+			f_obj.write("\n" + str(self.dendrites) + " Activation: " + str(self.nucleus_threshold))
+	
 	def find_optimal_threshold(self, expected_result, activation_matrix=""):
 		"""Find meaningful threshold fo given activation matrix"""
 		if activation_matrix:
@@ -194,7 +200,10 @@ class Neuron:
 		#for dendrite in self.dendrites:
 			dendrite = random.choice(random_dendrites)
 			activation_window = self.find_activation_window(dendrite, expected_result)
-			self.dendrites[dendrite] = random.choice(activation_window)
+			choice = self.find_average(activation_window)
+
+			self.dendrites[dendrite] = choice
+
 			random_dendrites.remove(dendrite)
 
 		# Cogitating in final setup
@@ -290,34 +299,36 @@ class Neuron:
 				ln_expected = expected
 				ln_matrix = matrix
 				ln_dataset_name = dataset_name
+		try:
+			while positive != negative:
+				if positive > negative:
+					expected = ln_expected
+					matrix = ln_matrix
+					dataset_name = ln_dataset_name
+					negative += 1
+				else:
+					expected = lp_expected
+					matrix = lp_matrix
+					dataset_name = lp_dataset_name	
+					positive += 1
+				dataset_name_c = str(dataset_name) + "_c" + str(negative)
+				self.learn(expected, matrix)
+				configuration = self.return_config()
+				learned_datasets[dataset_name_c] = {}
+				learned_datasets[dataset_name_c]["matrix"] = matrix
+				learned_datasets[dataset_name_c]["expected"] = expected
+				learned_datasets[dataset_name_c]["nucleus_threshold"] = configuration[1]
+				# Processing dendrites list (weird but it just cant equal it to
+				# configuration[0])
+				dendrites_config = {}
+				dendrites_local = configuration[0]
 
-		while positive != negative:
-			if positive > negative:
-				expected = ln_expected
-				matrix = ln_matrix
-				dataset_name = ln_dataset_name
-				negative += 1
-			else:
-				expected = lp_expected
-				matrix = lp_matrix
-				dataset_name = lp_dataset_name	
-				positive += 1
-			dataset_name_c = str(dataset_name) + "_c" + str(negative)
-			self.learn(expected, matrix)
-			configuration = self.return_config()
-			learned_datasets[dataset_name_c] = {}
-			learned_datasets[dataset_name_c]["matrix"] = matrix
-			learned_datasets[dataset_name_c]["expected"] = expected
-			learned_datasets[dataset_name_c]["nucleus_threshold"] = configuration[1]
-			# Processing dendrites list (weird but it just cant equal it to
-			# configuration[0])
-			dendrites_config = {}
-			dendrites_local = configuration[0]
+				for dendrite in dendrites_local:
+					dendrites_config[dendrite] = dendrites_local[dendrite]
 
-			for dendrite in dendrites_local:
-				dendrites_config[dendrite] = dendrites_local[dendrite]
-
-			learned_datasets[dataset_name_c]["dendrites_config"] = dendrites_config							
+				learned_datasets[dataset_name_c]["dendrites_config"] = dendrites_config		
+		except UnboundLocalError:
+			pass					
 		return learned_datasets 
 
 	def prepare_to_understand(self, datasets):
@@ -361,14 +372,18 @@ class Neuron:
 			self.dendrites[dendrite] = dendrite_average
 
 		activation_average = self.find_average(thresholds)
-
-		self.nucleus_threshold = (activation_average / 2) - 1
+		dendrites_values = []
+		for dendrite in self.dendrites:
+			dendrites_values.append(self.dendrites[dendrite])
+		increment = max(dendrites_values) / len(dendrites_values)
+		self.nucleus_threshold = (activation_average / 2) - 1 - increment
+		self.make_log()
 
 	def predict(self, dataset):
 		"""Try to predict correct result"""
 		self.cogitate(dataset)
 
-		print("I think answer is " + str(self.nucleus))
+		return self.nucleus
 			
 
 

@@ -241,11 +241,34 @@ class TestNeuron(unittest.TestCase):
 
 			my_neuron.learn(expected_result, activation_matrix)
 
-			print(my_neuron.dendrites)
-			print(activation_matrix)
-			print(my_neuron.nucleus_threshold)
-			print(my_neuron.nucleus)
-			print(expected_result)
 			self.assertEqual(expected_result, my_neuron.nucleus)		
+
+	def test_understanding_capabilities(self):
+		"""Will test ability to find pattern from datasets"""
+		dataset_len = 8
+		first_neuron = Neuron(dataset_len)
+
+		datasets ={}
+		for x in range(0,500):
+			datasets["data_" + str(x)] ={}
+
+		for dataset in datasets:
+			matrix = []
+			for x in range(0, dataset_len):
+				z = random.randint(0, 1)
+				matrix.append(z)
+			datasets[dataset]["matrix"] = matrix
+			if matrix[0] == 1 and matrix[1] == 0:
+				datasets[dataset]["expected"] = 1
+			else:
+				datasets[dataset]["expected"] = 0
+
+
+		first_neuron.understand_learned(datasets)
+
+		self.assertEqual(1, first_neuron.predict([1, 0, 0, 1, 0, 0, 0, 1]))
+		self.assertEqual(0, first_neuron.predict([1, 1, 0, 1, 1, 1, 1, 1]))
+		self.assertEqual(1, first_neuron.predict([1, 0, 1, 1, 1, 1, 1, 1]))
+
 
 unittest.main()
