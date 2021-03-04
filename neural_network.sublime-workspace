@@ -4,6 +4,166 @@
 		"selected_items":
 		[
 			[
+				"sorted",
+				"sorted_datasets"
+			],
+			[
+				"sort",
+				"sort_dataset"
+			],
+			[
+				"da",
+				"dataset_to_delete"
+			],
+			[
+				"acti",
+				"activation_window"
+			],
+			[
+				"ac",
+				"activation_matrix"
+			],
+			[
+				"activation",
+				"activation_matrix"
+			],
+			[
+				"fin",
+				"find_average"
+			],
+			[
+				"activa",
+				"activation_average"
+			],
+			[
+				"expe",
+				"expected"
+			],
+			[
+				"nucl",
+				"nucleus"
+			],
+			[
+				"pow",
+				"power_matrix"
+			],
+			[
+				"optim",
+				"optimal_threshold"
+			],
+			[
+				"random",
+				"random_selection"
+			],
+			[
+				"acto",
+				"activation_average"
+			],
+			[
+				"matr",
+				"matrix_str"
+			],
+			[
+				"prepa",
+				"prepared_datasets_str"
+			],
+			[
+				"learn",
+				"learn_datasets"
+			],
+			[
+				"prepare",
+				"prepare_to_understand"
+			],
+			[
+				"de",
+				"dendrites_local"
+			],
+			[
+				"lea",
+				"learned_datasets"
+			],
+			[
+				"current",
+				"current_dataset"
+			],
+			[
+				"dataset",
+				"dataset_name"
+			],
+			[
+				"initializ",
+				"initialize_dendrites"
+			],
+			[
+				"initi",
+				"initialize_dendrites"
+			],
+			[
+				"fi",
+				"first_neuron"
+			],
+			[
+				"expected",
+				"expected_result"
+			],
+			[
+				"lis",
+				"list_avg"
+			],
+			[
+				"active",
+				"active_array"
+			],
+			[
+				"power",
+				"power_matrix_average"
+			],
+			[
+				"find",
+				"find_optimal_threshold"
+			],
+			[
+				"va",
+				"value_matrix"
+			],
+			[
+				"nu",
+				"nucleus"
+			],
+			[
+				"no",
+				"normalize_dendrites"
+			],
+			[
+				"ma",
+				"maximize_dendrites"
+			],
+			[
+				"nucleus",
+				"nucleus_threshold"
+			],
+			[
+				"avera",
+				"average_from_class"
+			],
+			[
+				"power_",
+				"power_matrix_average"
+			],
+			[
+				"po",
+				"power_matrix_average"
+			],
+			[
+				"den",
+				"dendrites_amount"
+			],
+			[
+				"activ",
+				"activation_matrix"
+			],
+			[
 				"dendrites",
 				"Dendrites"
 			],
@@ -67,7 +227,7 @@
 			"file": "tests.py",
 			"settings":
 			{
-				"buffer_size": 6627,
+				"buffer_size": 8364,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -76,8 +236,16 @@
 			"file": "main.py",
 			"settings":
 			{
-				"buffer_size": 517,
+				"buffer_size": 1371,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "retrogramm.log",
+			"settings":
+			{
+				"buffer_size": 123965,
 				"line_ending": "Unix"
 			}
 		},
@@ -85,7 +253,7 @@
 			"file": "value_matrix.json",
 			"settings":
 			{
-				"buffer_size": 2,
+				"buffer_size": 229604,
 				"line_ending": "Unix"
 			}
 		},
@@ -93,7 +261,7 @@
 			"file": "neuron.py",
 			"settings":
 			{
-				"buffer_size": 4732,
+				"buffer_size": 13559,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -203,6 +371,8 @@
 	],
 	"file_history":
 	[
+		"/Users/antonvisnevski/Downloads/2_КАВ20А_испо_recover.csv",
+		"/Users/antonvisnevski/Desktop/code/neural_network/retrogramm.log",
 		"/Users/antonvisnevski/Desktop/code/pythonlearning/test2.py",
 		"/Users/antonvisnevski/Desktop/code/neural_network/debug.log",
 		"/Users/antonvisnevski/Desktop/code/neural_network/neuron.py",
@@ -321,6 +491,12 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"nc",
+			"pc",
+			"nc",
+			"average_from_class",
+			"nucleus =",
+			"nucleus",
 			"min",
 			"0.23200000000000004"
 		],
@@ -349,20 +525,21 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6627,
+						"buffer_size": 8364,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5757,
-								5757
+								7663,
+								7663
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -377,20 +554,49 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 517,
+						"buffer_size": 1371,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								517,
-								517
+								865,
+								865
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 82.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "retrogramm.log",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 123965,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								119530,
+								119513
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -400,31 +606,33 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "value_matrix.json",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2,
+						"buffer_size": 229604,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2,
-								2
+								1,
+								1
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -434,20 +642,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "neuron.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4732,
+						"buffer_size": 13559,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								922,
-								922
+								3735,
+								3735
 							]
 						],
 						"settings":
@@ -456,10 +664,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 86.0,
+						"translation.y": 2100.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -493,7 +701,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.534540261163,
 			1.0
 		],
 		"rows":
@@ -505,7 +713,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 158.0
+		"height": 137.0
 	},
 	"output.find_results":
 	{

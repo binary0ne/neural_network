@@ -245,11 +245,11 @@ class TestNeuron(unittest.TestCase):
 
 	def test_understanding_capabilities(self):
 		"""Will test ability to find pattern from datasets"""
-		dataset_len = 8
+		dataset_len = 10
 		first_neuron = Neuron(dataset_len)
 
 		datasets ={}
-		for x in range(0,500):
+		for x in range(0,4000):
 			datasets["data_" + str(x)] ={}
 
 		for dataset in datasets:
@@ -266,9 +266,9 @@ class TestNeuron(unittest.TestCase):
 
 		first_neuron.understand_learned(datasets)
 
-		self.assertEqual(1, first_neuron.predict([1, 0, 0, 1, 0, 0, 0, 1]))
-		self.assertEqual(0, first_neuron.predict([1, 1, 0, 1, 1, 1, 1, 1]))
-		self.assertEqual(1, first_neuron.predict([1, 0, 1, 1, 1, 1, 1, 1]))
-
+		self.assertEqual(1, first_neuron.predict([1, 0, 0, 0, 0, 0, 0, 0, 0, 0]))
+		self.assertEqual(0, first_neuron.predict([1, 1, 1, 1, 1, 1, 1, 1, 1, 1]))
+		self.assertEqual(1, first_neuron.predict([1, 0, 1, 1, 1, 1, 1, 1, 1, 1]))
+		self.assertEqual(0, first_neuron.predict([1, 1, 0, 0, 0, 0, 0, 0, 0, 0]))
 
 unittest.main()

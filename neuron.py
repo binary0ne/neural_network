@@ -84,7 +84,22 @@ class Neuron:
 	def setup_dendrites(self, target_settings):
 		"""Set dendrites power on targeted value"""
 		for dendrite in self.dendrites:
-			self.dendrites[dendrite] = target_settings		
+			self.dendrites[dendrite] = target_settings	
+
+	def sort_datasets(self, datasets):
+		"""Sorting dataset to make them distribute equally"""
+		old_expected = 0
+		datasets_to_delete = []
+		for dataset in datasets:
+			if datasets[dataset]["expected"] == old_expected:
+				old_expected = datasets[dataset]["expected"]
+				datasets_to_delete.append(dataset)
+			else:
+				old_expected = datasets[dataset]["expected"]
+
+		for dataset in datasets_to_delete:
+			del datasets[dataset]	
+		return datasets
 
 	# Cogitation process, compare activation vs mean sum of dendrites.
 	def cogitate(self, activation_matrix=""):
@@ -344,7 +359,8 @@ class Neuron:
 
 	def understand_learned(self, datasets):
 		'''Analyze datasets and adopt optimal parameters'''
-		learned_datasets = self.learn_datasets(datasets)
+		sorted_datasets = self.sort_datasets(datasets)
+		learned_datasets = self.learn_datasets(sorted_datasets)
 		prepared_datasets = self.prepare_to_understand(learned_datasets)
 		thresholds = []
 		dendrites_powers = {}
@@ -375,8 +391,8 @@ class Neuron:
 		dendrites_values = []
 		for dendrite in self.dendrites:
 			dendrites_values.append(self.dendrites[dendrite])
-		increment = max(dendrites_values) / len(dendrites_values)
-		self.nucleus_threshold = (activation_average / 2) - 1 - increment
+		threshold = max(dendrites_values) / 2 + 8
+		self.nucleus_threshold = threshold
 		self.make_log()
 
 	def predict(self, dataset):
